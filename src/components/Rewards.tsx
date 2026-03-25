@@ -115,8 +115,10 @@ export function Rewards({ circle, onUpdateCircle }: RewardsProps) {
     const nomination = nominations.find(n => n.id === nominationId);
     if (!nomination || nomination.votes.includes('current-user')) return;
 
-    const newVotes = [...nomination.votes, 'current-user'];
     const reward = MOCK_REWARDS.find(r => r.id === nomination.rewardId);
+    if (!reward || circle.points < reward.pointsCost) return;
+
+    const newVotes = [...nomination.votes, 'current-user'];
 
     if (newVotes.length >= 3 && reward && nomination.status === 'pending') {
       // Automatic redemption - update parent state outside of child state updater
@@ -269,6 +271,7 @@ export function Rewards({ circle, onUpdateCircle }: RewardsProps) {
                   nominations.filter(n => n.status === 'pending').map(nom => {
                     const reward = MOCK_REWARDS.find(r => r.id === nom.rewardId);
                     const hasVoted = nom.votes.includes('current-user');
+                    const canAfford = reward && circle.points >= reward.pointsCost;
                     const progress = (nom.votes.length / 3) * 100;
 
                     return (
@@ -303,12 +306,14 @@ export function Rewards({ circle, onUpdateCircle }: RewardsProps) {
 
                         <button
                           onClick={() => handleVote(nom.id)}
-                          disabled={hasVoted}
+                          disabled={hasVoted || !canAfford}
                           className={cn(
                             "w-full py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-2",
                             hasVoted
                               ? "bg-green-500/10 text-green-500 cursor-default"
-                              : "bg-red-500 text-white hover:bg-red-600"
+                              : canAfford
+                                ? "bg-red-500 text-white hover:bg-red-600"
+                                : "bg-white/5 text-gray-600 cursor-not-allowed"
                           )}
                         >
                           {hasVoted ? (
@@ -316,10 +321,15 @@ export function Rewards({ circle, onUpdateCircle }: RewardsProps) {
                               <CheckCircle2 size={14} />
                               {t('rewards.voted')}
                             </>
-                          ) : (
+                          ) : canAfford ? (
                             <>
                               <Vote size={14} />
                               {t('rewards.vote')}
+                            </>
+                          ) : (
+                            <>
+                              <Clock size={14} />
+                              {t('rewards.no_points')}
                             </>
                           )}
                         </button>

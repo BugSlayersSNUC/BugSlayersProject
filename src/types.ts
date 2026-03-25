@@ -15,6 +15,7 @@ export interface Donation {
   date: string;
   location: string;
   type: 'Blood' | 'Plasma' | 'Platelets';
+  amount?: number; // in ml
   proofUrl?: string;
   status: 'verified' | 'pending';
 }

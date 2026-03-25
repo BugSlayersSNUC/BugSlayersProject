@@ -9,7 +9,9 @@ interface LeaderboardProps {
 }
 
 export const Leaderboard: React.FC<LeaderboardProps> = ({ members }) => {
-  const sortedMembers = [...members].sort((a, b) => b.regularityScore - a.regularityScore);
+  const sortedMembers = [...members]
+    .filter(m => m && m.name) // Filter out invalid members
+    .sort((a, b) => (b.regularityScore || 0) - (a.regularityScore || 0));
 
   return (
     <div className="glass-card rounded-3xl p-6 h-full flex flex-col">

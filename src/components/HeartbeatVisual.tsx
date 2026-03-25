@@ -8,9 +8,9 @@ interface HeartbeatVisualProps {
 
 export const HeartbeatVisual: React.FC<HeartbeatVisualProps> = ({ score }) => {
   // Calculate duration based on score (higher score = faster beat)
-  // 100 score -> 0.3s duration (very fast)
-  // 0 score -> 3s duration (very slow)
-  const duration = score > 0 ? Math.max(0.3, 3 - (score / 100) * 2.7) : 0;
+  // 100 score -> 0.6s duration (100 BPM)
+  // 0 score -> 1.5s duration (40 BPM)
+  const duration = score > 0 ? (1.5 - (score / 100) * 0.9) : 0;
 
   // Calculate color based on score
   // 100 score -> Bright Red (#ef4444)
@@ -71,7 +71,7 @@ export const HeartbeatVisual: React.FC<HeartbeatVisualProps> = ({ score }) => {
 
       <div className="mt-6 text-center">
         <div className="text-4xl font-mono font-bold tracking-tighter">
-          {score > 0 ? Math.round(60 + (score / 100) * 100) : 0} 
+          {score > 0 ? Math.round(40 + (score / 100) * 60) : 0} 
           <span className="text-sm text-gray-500 ml-1">BPM</span>
         </div>
         <div className="text-xs uppercase tracking-widest text-gray-500 mt-1">

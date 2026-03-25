@@ -4,52 +4,7 @@ import { Search, MapPin, Users, Heart, ArrowRight, ShieldCheck, Globe, Trophy } 
 import { Circle } from '../types';
 import { cn } from '../lib/utils';
 
-const EXPLORE_CIRCLES: Circle[] = [
-  {
-    id: 'e1',
-    name: 'Downtown Donors',
-    description: 'A community of regular donors in the city center. We organize bi-weekly trips to the central bank.',
-    members: Array(12).fill({}),
-    donations: [],
-    activityScore: 92,
-    points: 1500,
-    distance: '1.2 km',
-    isPrivate: false
-  },
-  {
-    id: 'e2',
-    name: 'Tech Pulse',
-    description: 'Tech professionals saving lives. Join our network of developers and designers.',
-    members: Array(45).fill({}),
-    donations: [],
-    activityScore: 78,
-    points: 850,
-    distance: '3.5 km',
-    isPrivate: false
-  },
-  {
-    id: 'e3',
-    name: 'University Lifeline',
-    description: 'Student-led blood donation initiative. Open to all students and faculty.',
-    members: Array(120).fill({}),
-    donations: [],
-    activityScore: 65,
-    points: 420,
-    distance: '0.8 km',
-    isPrivate: false
-  },
-  {
-    id: 'e4',
-    name: 'Neighborhood Heroes',
-    description: 'Local residents committed to maintaining a steady blood supply for our community hospital.',
-    members: Array(8).fill({}),
-    donations: [],
-    activityScore: 45,
-    points: 120,
-    distance: '2.1 km',
-    isPrivate: true
-  }
-];
+import { MOCK_CIRCLES } from '../App';
 
 interface ExploreProps {
   currentCircleId: string;
@@ -69,11 +24,11 @@ export const Explore: React.FC<ExploreProps> = ({ currentCircleId, onSwitchCircl
     }, 800);
   };
 
-  const filteredCircles = EXPLORE_CIRCLES.filter(c => 
+  const filteredCircles = MOCK_CIRCLES.filter(c => 
     c.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const sortedCircles = [...EXPLORE_CIRCLES].sort((a, b) => b.activityScore - a.activityScore);
+  const sortedCircles = [...MOCK_CIRCLES].sort((a, b) => b.activityScore - a.activityScore);
 
   return (
     <div className="max-w-6xl mx-auto space-y-10 py-10 px-6">
