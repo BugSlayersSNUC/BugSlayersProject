@@ -1,27 +1,5 @@
 const { Community, Comment, User, sequelize } = require('../models');
 
-// Create a CommunityWithComments view for performance
-const initCommunityView = async () => {
-  await sequelize.query(`
-    CREATE VIEW IF NOT EXISTS CommunityWithComments AS
-    SELECT
-      c.community_id,
-      c.title,
-      c.description,
-      c.user_id,
-      c.upvotes,
-      c.date,
-      cm.comment_id,
-      cm.user_id  AS comment_user_id,
-      cm.text     AS comment_text,
-      cm.date     AS comment_date
-    FROM Communities c
-    LEFT JOIN Comments cm ON cm.community_id = c.community_id
-  `);
-};
-
-initCommunityView().catch(console.error);
-
 /**
  * GET /api/community
  * Lists all communities with their comments (via eager load).
@@ -85,4 +63,3 @@ const upvotePost = async (req, res) => {
 };
 
 module.exports = { getCommunities, createCommunity, upvotePost };
-

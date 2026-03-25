@@ -1,22 +1,5 @@
 const { Group, User, sequelize } = require('../models');
 
-// Create the GroupTotal view once on startup for performance
-const initGroupTotalView = async () => {
-  await sequelize.query(`
-    CREATE VIEW IF NOT EXISTS GroupTotal AS
-    SELECT
-      g.group_id,
-      g.group_name,
-      COUNT(u.user_id) AS member_count,
-      COALESCE(SUM(u.points), 0) AS total_points
-    FROM Groups g
-    LEFT JOIN Users u ON u.group_id = g.group_id
-    GROUP BY g.group_id, g.group_name
-  `);
-};
-
-initGroupTotalView().catch(console.error);
-
 /**
  * GET /api/groups
  * Returns all groups with total members and points from the GroupTotal view.
@@ -44,13 +27,28 @@ const getGroupById = async (req, res) => {
   try {
     const group = await Group.findOne({
       where: { group_id: req.params.id },
-      include: [{
-        model: User,
-        attributes: ['user_id', 'email', 'first_name', 'last_name', 'points'],
-      }],
     });
     if (!group) return res.status(404).json({ error: 'Group not found' });
-    return res.json(group);
+
+    const [members] = await sequelize.query(`
+      SELECT
+        u.user_id,
+        u.email,
+        u.first_name,
+        u.last_name,
+        COALESCE(up.total_points, 0) AS points
+      FROM Users u
+      LEFT JOIN UserPoints up ON up.user_id = u.user_id
+      WHERE u.group_id = ?
+      ORDER BY points DESC, u.user_id ASC
+    `, {
+      replacements: [req.params.id],
+    });
+
+    return res.json({
+      ...group.toJSON(),
+      Users: members,
+    });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: 'Server error' });
@@ -75,4 +73,3 @@ const createGroup = async (req, res) => {
 };
 
 module.exports = { getGroups, getGroupById, createGroup };
-

@@ -23,6 +23,7 @@ const Comment = sequelize.define('Comment', {
   },
   date: {
     type: DataTypes.DATE, // datetime
+    defaultValue: DataTypes.NOW,
   },
 }, {
   tableName: 'Comments',

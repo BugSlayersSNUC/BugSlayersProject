@@ -35,7 +35,6 @@ const exchangeToken = async (req, res) => {
       defaults: {
         uid,
         email: email || null,
-        points: 0,
       },
     });
 
@@ -54,4 +53,3 @@ const exchangeToken = async (req, res) => {
 };
 
 module.exports = { exchangeToken };
-

@@ -45,9 +45,6 @@ const createDonation = async (req, res) => {
       points,
     });
 
-    // Add points to user
-    await User.increment('points', { by: points, where: { user_id: user.user_id } });
-
     return res.status(201).json(donation);
   } catch (err) {
     console.error(err);

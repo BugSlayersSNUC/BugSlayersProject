@@ -20,6 +20,7 @@ const Donation = sequelize.define('Donation', {
   time: {
     type: DataTypes.DATE, // Date time
     allowNull: false,
+    defaultValue: DataTypes.NOW,
   },
   points: {
     type: DataTypes.INTEGER,

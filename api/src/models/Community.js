@@ -27,7 +27,7 @@ const Community = sequelize.define('Community', {
   },
   date: {
     type: DataTypes.DATE,
-    // Datetime
+    defaultValue: DataTypes.NOW,
   },
 }, {
   tableName: 'Communities',

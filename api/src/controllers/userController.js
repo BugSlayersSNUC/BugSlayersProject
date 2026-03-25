@@ -1,4 +1,19 @@
-const { User, Donation } = require('../models');
+const { User, Donation, sequelize } = require('../models');
+
+const getUserPoints = async (userId) => {
+  const [rows] = await sequelize.query(
+    'SELECT total_points FROM UserPoints WHERE user_id = ?',
+    { replacements: [userId] }
+  );
+
+  return rows[0]?.total_points ?? 0;
+};
+
+const serializeUserWithPoints = async (user) => {
+  const payload = user.toJSON();
+  payload.points = await getUserPoints(user.user_id);
+  return payload;
+};
 
 /**
  * GET /api/users
@@ -11,7 +26,7 @@ const getCurrentUser = async (req, res) => {
       include: [{ model: Donation }],
     });
     if (!user) return res.status(404).json({ error: 'User not found' });
-    return res.json(user);
+    return res.json(await serializeUserWithPoints(user));
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: 'Server error' });
@@ -29,7 +44,7 @@ const getUserById = async (req, res) => {
       include: [{ model: Donation }],
     });
     if (!user) return res.status(404).json({ error: 'User not found' });
-    return res.json(user);
+    return res.json(await serializeUserWithPoints(user));
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: 'Server error' });

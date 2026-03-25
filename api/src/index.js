@@ -6,6 +6,7 @@ const cors = require('cors');
 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const { syncReportingViews } = require('./config/views');
 const app = express();
 
 // ── Middleware ──────────────────────────────────────────────
@@ -33,7 +34,8 @@ const { sequelize } = require('./models');
 const PORT = process.env.PORT || 3000;
 
 sequelize.sync({ alter: true })
-  .then(() => {
+  .then(async () => {
+    await syncReportingViews();
     console.log('✅ SQLite Database mapped and synced');
     app.listen(PORT, () => {
       console.log(`🚀 Server running on http://localhost:${PORT}`);
