@@ -36,10 +36,14 @@ class ProfileScreen extends StatelessWidget {
                           shape: BoxShape.circle,
                           color: Colors.white.withValues(alpha: 0.06),
                           border: Border.all(
-                              color: Colors.white.withValues(alpha: 0.08)),
+                            color: Colors.white.withValues(alpha: 0.08),
+                          ),
                         ),
-                        child: const Icon(Icons.arrow_back_rounded,
-                            color: Colors.white70, size: 20),
+                        child: const Icon(
+                          Icons.arrow_back_rounded,
+                          color: Colors.white70,
+                          size: 20,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 16),
@@ -56,8 +60,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         Text(
                           'Your account details',
-                          style:
-                              TextStyle(color: Colors.white38, fontSize: 12),
+                          style: TextStyle(color: Colors.white38, fontSize: 12),
                         ),
                       ],
                     ),
@@ -151,7 +154,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     const Text(
-                      'Crimson Chapter  •  O+',
+                      'Crimson Chapter',
                       style: TextStyle(color: Colors.white38, fontSize: 13),
                     ),
                     const SizedBox(height: 10),
@@ -166,7 +169,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               // Edit Profile icon
-              GestureDetector(
+              /*GestureDetector(
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(builder: (_) => const EditProfileScreen()),
@@ -186,7 +189,7 @@ class ProfileScreen extends StatelessWidget {
                     size: 16,
                   ),
                 ),
-              ),
+              ),*/
             ],
           ),
         ),
@@ -245,7 +248,8 @@ class ProfileScreen extends StatelessWidget {
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (_) => const DonationHistoryScreen()),
+                    builder: (_) => const DonationHistoryScreen(),
+                  ),
                 ),
               ),
               _settingsRow(

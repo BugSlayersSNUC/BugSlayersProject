@@ -133,7 +133,6 @@ class HomeScreen extends StatelessWidget {
     return const [
       _MemberData(
         name: 'Vishal K.',
-        bloodType: 'O+',
         isMe: true,
         points: 320,
         donationCount: 4,
@@ -164,7 +163,6 @@ class HomeScreen extends StatelessWidget {
       ),
       _MemberData(
         name: 'Ananya S.',
-        bloodType: 'A+',
         isMe: false,
         points: 288,
         donationCount: 3,
@@ -190,7 +188,6 @@ class HomeScreen extends StatelessWidget {
       ),
       _MemberData(
         name: 'Rohan M.',
-        bloodType: 'B+',
         isMe: false,
         points: 264,
         donationCount: 3,
@@ -216,7 +213,6 @@ class HomeScreen extends StatelessWidget {
       ),
       _MemberData(
         name: 'Preethi K.',
-        bloodType: 'AB-',
         isMe: false,
         points: 216,
         donationCount: 2,
@@ -237,7 +233,6 @@ class HomeScreen extends StatelessWidget {
       ),
       _MemberData(
         name: 'Kiran R.',
-        bloodType: 'O-',
         isMe: false,
         points: 176,
         donationCount: 2,
@@ -258,7 +253,6 @@ class HomeScreen extends StatelessWidget {
       ),
       _MemberData(
         name: 'Divya N.',
-        bloodType: 'A-',
         isMe: false,
         points: 144,
         donationCount: 2,
@@ -309,7 +303,11 @@ class _DonateTopButton extends StatelessWidget {
         child: const Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.volunteer_activism_rounded, color: Colors.white, size: 18),
+            Icon(
+              Icons.volunteer_activism_rounded,
+              color: Colors.white,
+              size: 18,
+            ),
             SizedBox(width: 8),
             Text(
               'Donate Blood',
@@ -371,7 +369,6 @@ class _DonationRecord {
 
 class _MemberData {
   final String name;
-  final String bloodType;
   final bool isMe;
   final int points;
   final int donationCount;
@@ -381,7 +378,6 @@ class _MemberData {
 
   const _MemberData({
     required this.name,
-    required this.bloodType,
     required this.isMe,
     required this.points,
     required this.donationCount,
@@ -516,7 +512,7 @@ class _MemberCard extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        '${member.donationCount} donation${member.donationCount == 1 ? '' : 's'}  ·  ${member.bloodType}',
+                        '${member.donationCount} donation${member.donationCount == 1 ? '' : 's'}',
                         style: const TextStyle(
                           color: Colors.white24,
                           fontSize: 11,
@@ -685,7 +681,7 @@ class _MemberHistorySheet extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 2),
                                   Text(
-                                    'Crimson Chapter  ·  ${member.bloodType}',
+                                    'Crimson Chapter',
                                     style: const TextStyle(
                                       color: Colors.white38,
                                       fontSize: 13,
