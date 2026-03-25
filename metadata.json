@@ -1,0 +1,5 @@
+{
+  "name": "PulseLink",
+  "description": "A social impact platform for blood donation circles with real-time activity visualization and donation tracking.",
+  "requestFramePermissions": ["camera", "geolocation"]
+}

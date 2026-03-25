@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+:root {
+  --pulse-red: #ef4444;
+  --pulse-red-glow: rgba(239, 68, 68, 0.4);
+  --bg-dark: #0a0a0a;
+  --card-bg: #151515;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: #ffffff;
+  font-family: var(--font-sans);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.heart-glow {
+  filter: drop-shadow(0 0 15px var(--pulse-red-glow));
+}
