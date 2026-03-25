@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../widgets/heart_painter.dart';
+import 'qr_scanner_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -34,6 +35,10 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 20),
               _buildHeart(),
               _buildSubLabel(),
+              const SizedBox(height: 20),
+
+              // ── Donate Blood button ──
+              _DonateButton(),
               const SizedBox(height: 24),
 
               // ── Section header (fixed) ──
@@ -264,6 +269,56 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
     ];
+  }
+}
+
+// ── Donate Blood button ──
+
+class _DonateButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: GestureDetector(
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const QrScannerScreen()),
+        ),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            gradient: const LinearGradient(
+              colors: [Color(0xFFE53935), Color(0xFF8B0000)],
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFFE53935).withValues(alpha: 0.4),
+                blurRadius: 16,
+                offset: const Offset(0, 6),
+              ),
+            ],
+          ),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.qr_code_scanner_rounded, color: Colors.white, size: 20),
+              SizedBox(width: 10),
+              Text(
+                'Donate Blood',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.5,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
