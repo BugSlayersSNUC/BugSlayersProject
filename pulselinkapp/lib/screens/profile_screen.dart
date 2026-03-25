@@ -120,8 +120,6 @@ class ProfileScreen extends StatelessWidget {
                         _statPill('42 pts'),
                         const SizedBox(width: 8),
                         _statPill('6 donations'),
-                        const SizedBox(width: 8),
-                        _statPill('Next: 8 Jun'),
                       ],
                     ),
                   ],
@@ -168,18 +166,36 @@ class ProfileScreen extends StatelessWidget {
   // ── Donation history ──
   List<Widget> _buildHistoryItems() {
     final items = [
-      _HistoryEntry(date: '12 Mar 2026', location: 'City Blood Bank, Sector 12', pts: 8),
-      _HistoryEntry(date: '18 Dec 2025', location: 'Apollo Hospital Camp', pts: 8),
-      _HistoryEntry(date: '02 Sep 2025', location: 'Red Cross Drive, Hall 4', pts: 8),
-      _HistoryEntry(date: '05 Jun 2025', location: 'District Medical Centre', pts: 8),
+      _HistoryEntry(
+        date: '12 Mar 2026',
+        location: 'City Blood Bank, Sector 12',
+        pts: 8,
+      ),
+      _HistoryEntry(
+        date: '18 Dec 2025',
+        location: 'Apollo Hospital Camp',
+        pts: 8,
+      ),
+      _HistoryEntry(
+        date: '02 Sep 2025',
+        location: 'Red Cross Drive, Hall 4',
+        pts: 8,
+      ),
+      _HistoryEntry(
+        date: '05 Jun 2025',
+        location: 'District Medical Centre',
+        pts: 8,
+      ),
     ];
     return items
         .asMap()
         .entries
-        .map((e) => Padding(
-              padding: EdgeInsets.only(bottom: e.key < items.length - 1 ? 8 : 0),
-              child: _HistoryCard(entry: e.value, index: e.key),
-            ))
+        .map(
+          (e) => Padding(
+            padding: EdgeInsets.only(bottom: e.key < items.length - 1 ? 8 : 0),
+            child: _HistoryCard(entry: e.value, index: e.key),
+          ),
+        )
         .toList();
   }
 
@@ -197,11 +213,31 @@ class ProfileScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              _settingsRow(Icons.notifications_none_rounded, 'Notifications', showDivider: true),
-              _settingsRow(Icons.lock_outline_rounded, 'Privacy & Security', showDivider: true),
-              _settingsRow(Icons.group_outlined, 'My Group — Crimson Chapter', showDivider: true),
-              _settingsRow(Icons.help_outline_rounded, 'Help & Support', showDivider: true),
-              _settingsRow(Icons.info_outline_rounded, 'About PulseLink', showDivider: false),
+              _settingsRow(
+                Icons.notifications_none_rounded,
+                'Notifications',
+                showDivider: true,
+              ),
+              _settingsRow(
+                Icons.lock_outline_rounded,
+                'Privacy & Security',
+                showDivider: true,
+              ),
+              _settingsRow(
+                Icons.group_outlined,
+                'My Group — Crimson Chapter',
+                showDivider: true,
+              ),
+              _settingsRow(
+                Icons.help_outline_rounded,
+                'Help & Support',
+                showDivider: true,
+              ),
+              _settingsRow(
+                Icons.info_outline_rounded,
+                'About PulseLink',
+                showDivider: false,
+              ),
             ],
           ),
         ),
@@ -209,7 +245,11 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _settingsRow(IconData icon, String label, {required bool showDivider}) {
+  Widget _settingsRow(
+    IconData icon,
+    String label, {
+    required bool showDivider,
+  }) {
     return Column(
       children: [
         Padding(
@@ -228,7 +268,11 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const Icon(Icons.chevron_right_rounded, color: Colors.white24, size: 20),
+              const Icon(
+                Icons.chevron_right_rounded,
+                color: Colors.white24,
+                size: 20,
+              ),
             ],
           ),
         ),
@@ -284,7 +328,11 @@ class _HistoryEntry {
   final String date;
   final String location;
   final int pts;
-  const _HistoryEntry({required this.date, required this.location, required this.pts});
+  const _HistoryEntry({
+    required this.date,
+    required this.location,
+    required this.pts,
+  });
 }
 
 class _HistoryCard extends StatelessWidget {
@@ -337,13 +385,19 @@ class _HistoryCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       entry.date,
-                      style: const TextStyle(color: Colors.white24, fontSize: 11),
+                      style: const TextStyle(
+                        color: Colors.white24,
+                        fontSize: 11,
+                      ),
                     ),
                   ],
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   color: const Color(0xFFE53935).withValues(alpha: 0.12),

@@ -59,32 +59,6 @@ class RewardsScreen extends StatelessWidget {
               ),
             ],
           ),
-          const Spacer(),
-          Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: const Color(0xFFFFD700).withValues(alpha: 0.12),
-              border: Border.all(
-                  color: const Color(0xFFFFD700).withValues(alpha: 0.3)),
-            ),
-            child: const Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.emoji_events_rounded,
-                    size: 14, color: Color(0xFFFFD700)),
-                SizedBox(width: 4),
-                Text(
-                  'Active',
-                  style: TextStyle(
-                      color: Color(0xFFFFD700),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600),
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );
@@ -111,7 +85,8 @@ class RewardsScreen extends StatelessWidget {
                 end: Alignment.bottomRight,
               ),
               border: Border.all(
-                  color: const Color(0xFFE53935).withValues(alpha: 0.3)),
+                color: const Color(0xFFE53935).withValues(alpha: 0.3),
+              ),
             ),
             child: Row(
               children: [
@@ -126,8 +101,7 @@ class RewardsScreen extends StatelessWidget {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFFE53935)
-                            .withValues(alpha: 0.35),
+                        color: const Color(0xFFE53935).withValues(alpha: 0.35),
                         blurRadius: 10,
                         offset: const Offset(0, 3),
                       ),
@@ -135,15 +109,12 @@ class RewardsScreen extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      _teamName
-                          .split(' ')
-                          .take(2)
-                          .map((w) => w[0])
-                          .join(),
+                      _teamName.split(' ').take(2).map((w) => w[0]).join(),
                       style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -152,9 +123,10 @@ class RewardsScreen extends StatelessWidget {
                   child: Text(
                     _teamName,
                     style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Column(
@@ -168,9 +140,10 @@ class RewardsScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Text('pts',
-                        style: TextStyle(
-                            color: Colors.white24, fontSize: 11)),
+                    const Text(
+                      'pts',
+                      style: TextStyle(color: Colors.white24, fontSize: 11),
+                    ),
                   ],
                 ),
               ],
@@ -196,9 +169,7 @@ class RewardsScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10),
-          Expanded(
-              child:
-                  Divider(color: Colors.white.withValues(alpha: 0.07))),
+          Expanded(child: Divider(color: Colors.white.withValues(alpha: 0.07))),
         ],
       ),
     );
@@ -219,63 +190,63 @@ class RewardsScreen extends StatelessWidget {
   }
 
   List<_RewardData> _rewards() => [
-        const _RewardData(
-          title: 'Blood Donor Certificate',
-          description:
-              'Official certificate recognising your team\'s contribution to saving lives.',
-          requiredPts: 500,
-          icon: Icons.workspace_premium_rounded,
-        ),
-        const _RewardData(
-          title: 'PulseLink Sticker Pack',
-          description:
-              'Exclusive digital and physical sticker pack with the PulseLink blood drop designs.',
-          requiredPts: 1000,
-          icon: Icons.star_rounded,
-        ),
-        const _RewardData(
-          title: 'Priority Camp Registration',
-          description:
-              'Skip the queue — your team gets reserved slots at the next blood donation camp.',
-          requiredPts: 1500,
-          icon: Icons.event_available_rounded,
-        ),
-        const _RewardData(
-          title: 'Community Spotlight',
-          description:
-              'Your team is featured in the PulseLink monthly newsletter and social media post.',
-          requiredPts: 2000,
-          icon: Icons.campaign_rounded,
-        ),
-        const _RewardData(
-          title: 'Team Merchandise Kit',
-          description:
-              'Custom branded T-shirts, water bottles, and tote bags for the whole team.',
-          requiredPts: 2500,
-          icon: Icons.redeem_rounded,
-        ),
-        const _RewardData(
-          title: 'Hospital Partnership Badge',
-          description:
-              'Your team earns an official partnership status with a local hospital network.',
-          requiredPts: 3000,
-          icon: Icons.local_hospital_rounded,
-        ),
-        const _RewardData(
-          title: 'Annual Gala Invitation',
-          description:
-              'VIP invitation to the annual PulseLink Heroes Gala — dinner, awards, and networking.',
-          requiredPts: 4000,
-          icon: Icons.celebration_rounded,
-        ),
-        const _RewardData(
-          title: 'Legacy Wall of Fame',
-          description:
-              'Your team\'s name engraved on the PulseLink Hall of Fame, permanently recognising your impact.',
-          requiredPts: 5000,
-          icon: Icons.military_tech_rounded,
-        ),
-      ];
+    const _RewardData(
+      title: 'Blood Donor Certificate',
+      description:
+          'Official certificate recognising your team\'s contribution to saving lives.',
+      requiredPts: 500,
+      icon: Icons.workspace_premium_rounded,
+    ),
+    const _RewardData(
+      title: 'PulseLink Sticker Pack',
+      description:
+          'Exclusive digital and physical sticker pack with the PulseLink blood drop designs.',
+      requiredPts: 1000,
+      icon: Icons.star_rounded,
+    ),
+    const _RewardData(
+      title: 'Priority Camp Registration',
+      description:
+          'Skip the queue — your team gets reserved slots at the next blood donation camp.',
+      requiredPts: 1500,
+      icon: Icons.event_available_rounded,
+    ),
+    const _RewardData(
+      title: 'Community Spotlight',
+      description:
+          'Your team is featured in the PulseLink monthly newsletter and social media post.',
+      requiredPts: 2000,
+      icon: Icons.campaign_rounded,
+    ),
+    const _RewardData(
+      title: 'Team Merchandise Kit',
+      description:
+          'Custom branded T-shirts, water bottles, and tote bags for the whole team.',
+      requiredPts: 2500,
+      icon: Icons.redeem_rounded,
+    ),
+    const _RewardData(
+      title: 'Hospital Partnership Badge',
+      description:
+          'Your team earns an official partnership status with a local hospital network.',
+      requiredPts: 3000,
+      icon: Icons.local_hospital_rounded,
+    ),
+    const _RewardData(
+      title: 'Annual Gala Invitation',
+      description:
+          'VIP invitation to the annual PulseLink Heroes Gala — dinner, awards, and networking.',
+      requiredPts: 4000,
+      icon: Icons.celebration_rounded,
+    ),
+    const _RewardData(
+      title: 'Legacy Wall of Fame',
+      description:
+          'Your team\'s name engraved on the PulseLink Hall of Fame, permanently recognising your impact.',
+      requiredPts: 5000,
+      icon: Icons.military_tech_rounded,
+    ),
+  ];
 }
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -319,9 +290,7 @@ class _RewardCard extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             color: Colors.white.withValues(alpha: 0.04),
-            border: Border.all(
-              color: Colors.white.withValues(alpha: 0.07),
-            ),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.07)),
           ),
           child: Row(
             children: [
@@ -332,9 +301,7 @@ class _RewardCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: _accent.withValues(alpha: 0.12),
-                  border: Border.all(
-                    color: _accent.withValues(alpha: 0.25),
-                  ),
+                  border: Border.all(color: _accent.withValues(alpha: 0.25)),
                 ),
                 child: Icon(reward.icon, color: _accent, size: 24),
               ),
@@ -367,18 +334,24 @@ class _RewardCard extends StatelessWidget {
                       children: [
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 4),
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             color: _accent.withValues(alpha: 0.10),
                             border: Border.all(
-                                color: _accent.withValues(alpha: 0.25)),
+                              color: _accent.withValues(alpha: 0.25),
+                            ),
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Icon(Icons.toll_rounded,
-                                  size: 12, color: _accent),
+                              const Icon(
+                                Icons.toll_rounded,
+                                size: 12,
+                                color: _accent,
+                              ),
                               const SizedBox(width: 4),
                               Text(
                                 '${reward.requiredPts} pts',
@@ -397,7 +370,9 @@ class _RewardCard extends StatelessWidget {
                             onTap: () => _showClaimDialog(context),
                             child: Container(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 14, vertical: 6),
+                                horizontal: 14,
+                                vertical: 6,
+                              ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
                                 gradient: const LinearGradient(
@@ -444,13 +419,17 @@ class _RewardCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 color: const Color(0xFF1A0A0A).withValues(alpha: 0.97),
                 border: Border.all(
-                    color: const Color(0xFFE53935).withValues(alpha: 0.35)),
+                  color: const Color(0xFFE53935).withValues(alpha: 0.35),
+                ),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.check_circle_outline_rounded,
-                      color: Color(0xFFEF5350), size: 48),
+                  const Icon(
+                    Icons.check_circle_outline_rounded,
+                    color: Color(0xFFEF5350),
+                    size: 48,
+                  ),
                   const SizedBox(height: 16),
                   Text(
                     reward.title,
@@ -466,7 +445,10 @@ class _RewardCard extends StatelessWidget {
                     "Your claim has been submitted!\nAn admin will contact your team shortly.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        color: Colors.white54, fontSize: 13, height: 1.5),
+                      color: Colors.white54,
+                      fontSize: 13,
+                      height: 1.5,
+                    ),
                   ),
                   const SizedBox(height: 24),
                   GestureDetector(

@@ -57,36 +57,6 @@ class LeaderboardScreen extends StatelessWidget {
               ),
             ],
           ),
-          const Spacer(),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: const Color(0xFFE53935).withValues(alpha: 0.15),
-              border: Border.all(
-                color: const Color(0xFFE53935).withValues(alpha: 0.3),
-              ),
-            ),
-            child: const Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.calendar_month_rounded,
-                  size: 14,
-                  color: Color(0xFFEF5350),
-                ),
-                SizedBox(width: 4),
-                Text(
-                  'This Month',
-                  style: TextStyle(
-                    color: Color(0xFFEF5350),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );
