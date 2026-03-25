@@ -1,2 +1,2 @@
 # BugSlayersProject
-A project by Bug Slayers of SNUC.
+A project by Team Bug Slayers of SNUC.
