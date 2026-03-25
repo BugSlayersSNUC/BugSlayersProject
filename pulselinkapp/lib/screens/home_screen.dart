@@ -31,14 +31,20 @@ class HomeScreen extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
+              // ── Top Bar ──
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    _DonateTopButton(),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
               // ── Fixed top: heart + label ──
-              const SizedBox(height: 20),
               _buildHeart(),
               _buildSubLabel(),
-              const SizedBox(height: 20),
-
-              // ── Donate Blood button ──
-              _DonateButton(),
               const SizedBox(height: 24),
 
               // ── Section header (fixed) ──
@@ -274,48 +280,43 @@ class HomeScreen extends StatelessWidget {
 
 // ── Donate Blood button ──
 
-class _DonateButton extends StatelessWidget {
+class _DonateTopButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: GestureDetector(
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const QrScannerScreen()),
-        ),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            gradient: const LinearGradient(
-              colors: [Color(0xFFE53935), Color(0xFF8B0000)],
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const QrScannerScreen()),
+      ),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          gradient: const LinearGradient(
+            colors: [Color(0xFFE53935), Color(0xFF8B0000)],
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFFE53935).withValues(alpha: 0.4),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
             ),
-            boxShadow: [
-              BoxShadow(
-                color: const Color(0xFFE53935).withValues(alpha: 0.4),
-                blurRadius: 16,
-                offset: const Offset(0, 6),
+          ],
+        ),
+        child: const Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.volunteer_activism_rounded, color: Colors.white, size: 18),
+            SizedBox(width: 8),
+            Text(
+              'Donate Blood',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
               ),
-            ],
-          ),
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.qr_code_scanner_rounded, color: Colors.white, size: 20),
-              SizedBox(width: 10),
-              Text(
-                'Donate Blood',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 0.5,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
