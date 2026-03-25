@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'app_shell.dart';
+import 'join_group_screen.dart';
 import 'signup_screen.dart';
 import 'forgot_password_screen.dart';
 
@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _goHome() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (_) => const AppShell()),
+      MaterialPageRoute(builder: (_) => const JoinGroupScreen()),
     );
   }
 

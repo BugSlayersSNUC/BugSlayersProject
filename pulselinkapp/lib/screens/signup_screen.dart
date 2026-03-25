@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'app_shell.dart';
+import 'join_group_screen.dart';
 import 'login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -29,7 +29,7 @@ class _SignupScreenState extends State<SignupScreen> {
   void _goHome() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (_) => const AppShell()),
+      MaterialPageRoute(builder: (_) => const JoinGroupScreen()),
     );
   }
 
