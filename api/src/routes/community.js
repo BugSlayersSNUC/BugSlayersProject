@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { verifyIdToken } = require('../middleware/authMiddleware');
-const { getCommunities, createCommunity } = require('../controllers/communityController');
+const { getCommunities, createCommunity, upvotePost } = require('../controllers/communityController');
 
 const router = Router();
 
@@ -10,4 +10,8 @@ router.get('/', verifyIdToken, getCommunities);
 // POST /api/community — { title, description }
 router.post('/', verifyIdToken, createCommunity);
 
+// POST /api/community/:id/upvote — increment upvotes for a post
+router.post('/:id/upvote', verifyIdToken, upvotePost);
+
 module.exports = router;
+

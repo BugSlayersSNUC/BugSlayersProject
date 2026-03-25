@@ -20,11 +20,37 @@ initGroupTotalView().catch(console.error);
 /**
  * GET /api/groups
  * Returns all groups with total members and points from the GroupTotal view.
+ * Optional query param: ?sort=leaderboard — adds a secondary sort by member_count DESC.
  */
-const getGroups = async (_req, res) => {
+const getGroups = async (req, res) => {
   try {
-    const [groups] = await sequelize.query('SELECT * FROM GroupTotal');
+    const isLeaderboard = req.query.sort === 'leaderboard';
+    const orderClause = isLeaderboard
+      ? 'ORDER BY total_points DESC, member_count DESC'
+      : 'ORDER BY total_points DESC';
+    const [groups] = await sequelize.query(`SELECT * FROM GroupTotal ${orderClause}`);
     return res.json(groups);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Server error' });
+  }
+};
+
+/**
+ * GET /api/groups/:id
+ * Returns a single group with its member list (user_id, email, first_name, last_name, points).
+ */
+const getGroupById = async (req, res) => {
+  try {
+    const group = await Group.findOne({
+      where: { group_id: req.params.id },
+      include: [{
+        model: User,
+        attributes: ['user_id', 'email', 'first_name', 'last_name', 'points'],
+      }],
+    });
+    if (!group) return res.status(404).json({ error: 'Group not found' });
+    return res.json(group);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: 'Server error' });
@@ -48,4 +74,5 @@ const createGroup = async (req, res) => {
   }
 };
 
-module.exports = { getGroups, createGroup };
+module.exports = { getGroups, getGroupById, createGroup };
+

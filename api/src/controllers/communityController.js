@@ -66,4 +66,23 @@ const createCommunity = async (req, res) => {
   }
 };
 
-module.exports = { getCommunities, createCommunity };
+/**
+ * POST /api/community/:id/upvote
+ * Atomically increments the upvote count for a community post.
+ */
+const upvotePost = async (req, res) => {
+  try {
+    const post = await Community.findOne({ where: { community_id: req.params.id } });
+    if (!post) return res.status(404).json({ error: 'Post not found' });
+
+    await post.increment('upvotes', { by: 1 });
+    await post.reload();
+    return res.json({ community_id: post.community_id, upvotes: post.upvotes });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Server error' });
+  }
+};
+
+module.exports = { getCommunities, createCommunity, upvotePost };
+
