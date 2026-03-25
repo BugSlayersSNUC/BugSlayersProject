@@ -64,20 +64,25 @@ class LeaderboardScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               color: const Color(0xFFE53935).withValues(alpha: 0.15),
               border: Border.all(
-                  color: const Color(0xFFE53935).withValues(alpha: 0.3)),
+                color: const Color(0xFFE53935).withValues(alpha: 0.3),
+              ),
             ),
             child: const Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.calendar_month_rounded,
-                    size: 14, color: Color(0xFFEF5350)),
+                Icon(
+                  Icons.calendar_month_rounded,
+                  size: 14,
+                  color: Color(0xFFEF5350),
+                ),
                 SizedBox(width: 4),
                 Text(
                   'This Month',
                   style: TextStyle(
-                      color: Color(0xFFEF5350),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600),
+                    color: Color(0xFFEF5350),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ],
             ),
@@ -96,16 +101,31 @@ class LeaderboardScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Expanded(
-              child: _PodiumCard(
-                  group: top3[1], rank: 2, height: 138, context: context)),
+            child: _PodiumCard(
+              group: top3[1],
+              rank: 2,
+              height: 138,
+              context: context,
+            ),
+          ),
           const SizedBox(width: 10),
           Expanded(
-              child: _PodiumCard(
-                  group: top3[0], rank: 1, height: 170, context: context)),
+            child: _PodiumCard(
+              group: top3[0],
+              rank: 1,
+              height: 170,
+              context: context,
+            ),
+          ),
           const SizedBox(width: 10),
           Expanded(
-              child: _PodiumCard(
-                  group: top3[2], rank: 3, height: 115, context: context)),
+            child: _PodiumCard(
+              group: top3[2],
+              rank: 3,
+              height: 115,
+              context: context,
+            ),
+          ),
         ],
       ),
     );
@@ -126,8 +146,7 @@ class LeaderboardScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10),
-          Expanded(
-              child: Divider(color: Colors.white.withValues(alpha: 0.07))),
+          Expanded(child: Divider(color: Colors.white.withValues(alpha: 0.07))),
         ],
       ),
     );
@@ -171,7 +190,7 @@ class LeaderboardScreen extends StatelessWidget {
         ],
       ),
       _GroupData(
-        name: 'Lifeline Collective',
+        name: 'Lifeline',
         points: 2410,
         members: [
           _MemberEntry(name: 'Rahul G.', pts: 480, donations: 5),
@@ -241,16 +260,22 @@ class _MemberEntry {
   final String name;
   final int pts;
   final int donations;
-  const _MemberEntry(
-      {required this.name, required this.pts, required this.donations});
+  const _MemberEntry({
+    required this.name,
+    required this.pts,
+    required this.donations,
+  });
 }
 
 class _GroupData {
   final String name;
   final int points;
   final List<_MemberEntry> members;
-  const _GroupData(
-      {required this.name, required this.points, required this.members});
+  const _GroupData({
+    required this.name,
+    required this.points,
+    required this.members,
+  });
 }
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -282,16 +307,16 @@ class _PodiumCard extends StatelessWidget {
   });
 
   Color get _rankColor => switch (rank) {
-        1 => const Color(0xFFFFD700),
-        2 => const Color(0xFFC0C0C0),
-        _ => const Color(0xFFCD7F32),
-      };
+    1 => const Color(0xFFFFD700),
+    2 => const Color(0xFFC0C0C0),
+    _ => const Color(0xFFCD7F32),
+  };
 
   String get _medal => switch (rank) {
-        1 => '🥇',
-        2 => '🥈',
-        _ => '🥉',
-      };
+    1 => '🥇',
+    2 => '🥈',
+    _ => '🥉',
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -319,8 +344,7 @@ class _PodiumCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(_medal,
-                    style: TextStyle(fontSize: rank == 1 ? 26 : 20)),
+                Text(_medal, style: TextStyle(fontSize: rank == 1 ? 26 : 20)),
                 const SizedBox(height: 6),
                 Text(
                   group.name,
@@ -337,9 +361,10 @@ class _PodiumCard extends StatelessWidget {
                 Text(
                   '${group.points} pts',
                   style: TextStyle(
-                      color: _rankColor,
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold),
+                    color: _rankColor,
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   '${group.members.length} members',
@@ -361,8 +386,11 @@ class _RankRow extends StatelessWidget {
   final int rank;
   final BuildContext context;
 
-  const _RankRow(
-      {required this.group, required this.rank, required this.context});
+  const _RankRow({
+    required this.group,
+    required this.rank,
+    required this.context,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -373,13 +401,11 @@ class _RankRow extends StatelessWidget {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
           child: Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: Colors.white.withValues(alpha: 0.04),
-              border:
-                  Border.all(color: Colors.white.withValues(alpha: 0.06)),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
             ),
             child: Row(
               children: [
@@ -388,9 +414,10 @@ class _RankRow extends StatelessWidget {
                   child: Text(
                     '#$rank',
                     style: const TextStyle(
-                        color: Colors.white24,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold),
+                      color: Colors.white24,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Container(
@@ -398,16 +425,16 @@ class _RankRow extends StatelessWidget {
                   height: 38,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color:
-                        const Color(0xFFE53935).withValues(alpha: 0.12),
+                    color: const Color(0xFFE53935).withValues(alpha: 0.12),
                   ),
                   child: Center(
                     child: Text(
                       group.name.split(' ').take(2).map((w) => w[0]).join(),
                       style: const TextStyle(
-                          color: Color(0xFFEF5350),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13),
+                        color: Color(0xFFEF5350),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      ),
                     ),
                   ),
                 ),
@@ -419,14 +446,17 @@ class _RankRow extends StatelessWidget {
                       Text(
                         group.name,
                         style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500),
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                       Text(
                         '${group.members.length} members',
                         style: const TextStyle(
-                            color: Colors.white24, fontSize: 11),
+                          color: Colors.white24,
+                          fontSize: 11,
+                        ),
                       ),
                     ],
                   ),
@@ -437,18 +467,23 @@ class _RankRow extends StatelessWidget {
                     Text(
                       '${group.points}',
                       style: const TextStyle(
-                          color: Color(0xFFEF5350),
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
+                        color: Color(0xFFEF5350),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    const Text('pts',
-                        style:
-                            TextStyle(color: Colors.white24, fontSize: 10)),
+                    const Text(
+                      'pts',
+                      style: TextStyle(color: Colors.white24, fontSize: 10),
+                    ),
                   ],
                 ),
                 const SizedBox(width: 6),
-                const Icon(Icons.chevron_right_rounded,
-                    color: Colors.white12, size: 18),
+                const Icon(
+                  Icons.chevron_right_rounded,
+                  color: Colors.white12,
+                  size: 18,
+                ),
               ],
             ),
           ),
@@ -468,25 +503,23 @@ class _TeamDetailSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sorted = [...group.members]
-      ..sort((a, b) => b.pts.compareTo(a.pts));
+    final sorted = [...group.members]..sort((a, b) => b.pts.compareTo(a.pts));
     return DraggableScrollableSheet(
       initialChildSize: 0.65,
       minChildSize: 0.45,
       maxChildSize: 0.92,
       builder: (context, scrollController) {
         return ClipRRect(
-          borderRadius:
-              const BorderRadius.vertical(top: Radius.circular(24)),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(24)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(24),
+                ),
                 color: const Color(0xFF120808).withValues(alpha: 0.97),
-                border:
-                    Border.all(color: Colors.white.withValues(alpha: 0.07)),
+                border: Border.all(color: Colors.white.withValues(alpha: 0.07)),
               ),
               child: Column(
                 children: [
@@ -518,8 +551,9 @@ class _TeamDetailSheet extends StatelessWidget {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFFE53935)
-                                    .withValues(alpha: 0.35),
+                                color: const Color(
+                                  0xFFE53935,
+                                ).withValues(alpha: 0.35),
                                 blurRadius: 12,
                                 offset: const Offset(0, 4),
                               ),
@@ -533,9 +567,10 @@ class _TeamDetailSheet extends StatelessWidget {
                                   .map((w) => w[0])
                                   .join(),
                               style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
@@ -547,14 +582,17 @@ class _TeamDetailSheet extends StatelessWidget {
                               Text(
                                 group.name,
                                 style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               Text(
                                 '${group.points} pts  ·  ${group.members.length} members',
                                 style: const TextStyle(
-                                    color: Colors.white38, fontSize: 13),
+                                  color: Colors.white38,
+                                  fontSize: 13,
+                                ),
                               ),
                             ],
                           ),
@@ -581,7 +619,8 @@ class _TeamDetailSheet extends StatelessWidget {
                         const SizedBox(width: 10),
                         Expanded(
                           child: Divider(
-                              color: Colors.white.withValues(alpha: 0.07)),
+                            color: Colors.white.withValues(alpha: 0.07),
+                          ),
                         ),
                       ],
                     ),
@@ -589,8 +628,7 @@ class _TeamDetailSheet extends StatelessWidget {
                   Expanded(
                     child: ListView.separated(
                       controller: scrollController,
-                      padding:
-                          const EdgeInsets.fromLTRB(20, 0, 20, 24),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
                       itemCount: sorted.length,
                       separatorBuilder: (context2, i) =>
                           const SizedBox(height: 8),
@@ -649,9 +687,10 @@ class _MemberRow extends StatelessWidget {
               child: Text(
                 member.name[0],
                 style: const TextStyle(
-                    color: Color(0xFFEF5350),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15),
+                  color: Color(0xFFEF5350),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
               ),
             ),
           ),
@@ -660,15 +699,17 @@ class _MemberRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(member.name,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500)),
+                Text(
+                  member.name,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
                 Text(
                   '${member.donations} donation${member.donations == 1 ? '' : 's'}',
-                  style:
-                      const TextStyle(color: Colors.white24, fontSize: 11),
+                  style: const TextStyle(color: Colors.white24, fontSize: 11),
                 ),
               ],
             ),
@@ -676,13 +717,18 @@ class _MemberRow extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text('${member.pts}',
-                  style: const TextStyle(
-                      color: Color(0xFFEF5350),
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold)),
-              const Text('pts',
-                  style: TextStyle(color: Colors.white24, fontSize: 10)),
+              Text(
+                '${member.pts}',
+                style: const TextStyle(
+                  color: Color(0xFFEF5350),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Text(
+                'pts',
+                style: TextStyle(color: Colors.white24, fontSize: 10),
+              ),
             ],
           ),
         ],

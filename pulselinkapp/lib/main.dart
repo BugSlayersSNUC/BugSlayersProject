@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/app_shell.dart';
+import 'screens/login_screen.dart';
 
 void main() {
   runApp(const PulseLinkApp());
@@ -23,7 +23,7 @@ class PulseLinkApp extends StatelessWidget {
         ),
         fontFamily: 'Roboto',
       ),
-      home: const AppShell(),
+      home: const LoginScreen(),
     );
   }
 }
