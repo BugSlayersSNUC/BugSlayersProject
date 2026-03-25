@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'feed_screen.dart';
 import 'leaderboard_screen.dart';
+import 'rewards_screen.dart';
 
 /// Root shell that provides the bottom navigation bar and manages
 /// the four tab pages: Home, Feed, Leaderboard, and Profile.
@@ -19,6 +20,7 @@ class _AppShellState extends State<AppShell> {
     HomeScreen(),
     FeedScreen(),
     LeaderboardScreen(),
+    RewardsScreen(),
   ];
 
   @override
@@ -68,6 +70,12 @@ class _AppShellState extends State<AppShell> {
                   label: 'Leaderboard',
                   isSelected: _currentIndex == 2,
                   onTap: () => setState(() => _currentIndex = 2),
+                ),
+                _NavItem(
+                  icon: Icons.card_giftcard_rounded,
+                  label: 'Rewards',
+                  isSelected: _currentIndex == 3,
+                  onTap: () => setState(() => _currentIndex = 3),
                 ),
               ],
             ),
