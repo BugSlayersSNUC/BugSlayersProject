@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../widgets/heart_painter.dart';
 import 'qr_scanner_screen.dart';
+import 'profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -38,6 +39,8 @@ class HomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     _DonateTopButton(),
+                    const SizedBox(width: 10),
+                    _ProfileIconButton(),
                   ],
                 ),
               ),
@@ -317,6 +320,34 @@ class _DonateTopButton extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+// ── Profile icon button ──
+
+class _ProfileIconButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const ProfileScreen()),
+      ),
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white.withValues(alpha: 0.07),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.12)),
+        ),
+        child: const Icon(
+          Icons.person_rounded,
+          color: Colors.white70,
+          size: 20,
         ),
       ),
     );
