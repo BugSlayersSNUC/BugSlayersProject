@@ -18,13 +18,27 @@ app.use(express.json());
 
 // ── Routes ──────────────────────────────────────────────────
 app.use('/api/auth', authRoutes);
-app.use('/api/user', userRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/groups', require('./routes/groups'));
+app.use('/api/donations', require('./routes/donations'));
+app.use('/api/community', require('./routes/community'));
+app.use('/api/comments', require('./routes/comments'));
 
 // 404 fallback
 app.use((_req, res) => res.status(404).json({ error: 'Not found' }));
 
 // ── Start ───────────────────────────────────────────────────
+const { sequelize } = require('./models');
+
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
+
+sequelize.sync({ alter: true })
+  .then(() => {
+    console.log('✅ SQLite Database mapped and synced');
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on http://localhost:${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('❌ Unable to connect to the database:', err);
+  });
