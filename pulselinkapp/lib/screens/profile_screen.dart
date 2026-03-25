@@ -1,5 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'donation_history_screen.dart';
+import 'edit_profile_screen.dart';
 
 /// Profile screen with donation history, settings, and logout.
 class ProfileScreen extends StatelessWidget {
@@ -21,16 +23,54 @@ class ProfileScreen extends StatelessWidget {
           child: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             children: [
-              const SizedBox(height: 20),
-              _buildProfileCard(),
+              // ── Top bar ──
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white.withValues(alpha: 0.06),
+                          border: Border.all(
+                              color: Colors.white.withValues(alpha: 0.08)),
+                        ),
+                        child: const Icon(Icons.arrow_back_rounded,
+                            color: Colors.white70, size: 20),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Profile',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'Your account details',
+                          style:
+                              TextStyle(color: Colors.white38, fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(height: 24),
-              _buildSectionTitle('Donation History'),
-              const SizedBox(height: 12),
-              ..._buildHistoryItems(),
+              _buildProfileCard(context),
+
               const SizedBox(height: 24),
               _buildSectionTitle('Settings'),
               const SizedBox(height: 12),
-              _buildSettingsGroup(),
+              _buildSettingsGroup(context),
               const SizedBox(height: 24),
               _buildLogoutButton(),
               const SizedBox(height: 32),
@@ -42,7 +82,7 @@ class ProfileScreen extends StatelessWidget {
   }
 
   // ── Profile card ──
-  Widget _buildProfileCard() {
+  Widget _buildProfileCard(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: BackdropFilter(
@@ -125,6 +165,28 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              // Edit Profile icon
+              GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const EditProfileScreen()),
+                ),
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white.withValues(alpha: 0.07),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.10),
+                    ),
+                  ),
+                  child: const Icon(
+                    Icons.edit_rounded,
+                    color: Colors.white54,
+                    size: 16,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -163,44 +225,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  // ── Donation history ──
-  List<Widget> _buildHistoryItems() {
-    final items = [
-      _HistoryEntry(
-        date: '12 Mar 2026',
-        location: 'City Blood Bank, Sector 12',
-        pts: 8,
-      ),
-      _HistoryEntry(
-        date: '18 Dec 2025',
-        location: 'Apollo Hospital Camp',
-        pts: 8,
-      ),
-      _HistoryEntry(
-        date: '02 Sep 2025',
-        location: 'Red Cross Drive, Hall 4',
-        pts: 8,
-      ),
-      _HistoryEntry(
-        date: '05 Jun 2025',
-        location: 'District Medical Centre',
-        pts: 8,
-      ),
-    ];
-    return items
-        .asMap()
-        .entries
-        .map(
-          (e) => Padding(
-            padding: EdgeInsets.only(bottom: e.key < items.length - 1 ? 8 : 0),
-            child: _HistoryCard(entry: e.value, index: e.key),
-          ),
-        )
-        .toList();
-  }
-
-  // ── Settings group ──
-  Widget _buildSettingsGroup() {
+  Widget _buildSettingsGroup(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),
       child: BackdropFilter(
@@ -214,29 +239,19 @@ class ProfileScreen extends StatelessWidget {
           child: Column(
             children: [
               _settingsRow(
-                Icons.notifications_none_rounded,
-                'Notifications',
+                Icons.calendar_month_outlined,
+                'Donation History',
                 showDivider: true,
-              ),
-              _settingsRow(
-                Icons.lock_outline_rounded,
-                'Privacy & Security',
-                showDivider: true,
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const DonationHistoryScreen()),
+                ),
               ),
               _settingsRow(
                 Icons.group_outlined,
                 'My Group — Crimson Chapter',
                 showDivider: true,
-              ),
-              _settingsRow(
-                Icons.help_outline_rounded,
-                'Help & Support',
-                showDivider: true,
-              ),
-              _settingsRow(
-                Icons.info_outline_rounded,
-                'About PulseLink',
-                showDivider: false,
               ),
             ],
           ),
@@ -249,31 +264,35 @@ class ProfileScreen extends StatelessWidget {
     IconData icon,
     String label, {
     required bool showDivider,
+    VoidCallback? onTap,
   }) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          child: Row(
-            children: [
-              Icon(icon, color: Colors.white38, size: 20),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Text(
-                  label,
-                  style: const TextStyle(
-                    color: Colors.white70,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
+        InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            child: Row(
+              children: [
+                Icon(icon, color: Colors.white38, size: 20),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Text(
+                    label,
+                    style: const TextStyle(
+                      color: Colors.white70,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
-              ),
-              const Icon(
-                Icons.chevron_right_rounded,
-                color: Colors.white24,
-                size: 20,
-              ),
-            ],
+                const Icon(
+                  Icons.chevron_right_rounded,
+                  color: Colors.white24,
+                  size: 20,
+                ),
+              ],
+            ),
           ),
         ),
         if (showDivider)
@@ -312,103 +331,6 @@ class ProfileScreen extends StatelessWidget {
                   color: Color(0xFFEF5350),
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// ── Data + widgets for history ──
-
-class _HistoryEntry {
-  final String date;
-  final String location;
-  final int pts;
-  const _HistoryEntry({
-    required this.date,
-    required this.location,
-    required this.pts,
-  });
-}
-
-class _HistoryCard extends StatelessWidget {
-  final _HistoryEntry entry;
-  final int index;
-  const _HistoryCard({required this.entry, required this.index});
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: Colors.white.withValues(alpha: 0.04),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
-          ),
-          child: Row(
-            children: [
-              // Timeline indicator
-              Container(
-                width: 36,
-                height: 36,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: const Color(0xFFE53935).withValues(alpha: 0.12),
-                ),
-                child: const Icon(
-                  Icons.water_drop_outlined,
-                  color: Color(0xFFEF5350),
-                  size: 18,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      entry.location,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      entry.date,
-                      style: const TextStyle(
-                        color: Colors.white24,
-                        fontSize: 11,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 5,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: const Color(0xFFE53935).withValues(alpha: 0.12),
-                ),
-                child: Text(
-                  '+${entry.pts} pts',
-                  style: const TextStyle(
-                    color: Color(0xFFEF5350),
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
                 ),
               ),
             ],
