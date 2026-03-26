@@ -1,20 +1,48 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# PulseLink — Squad-Based Altruism
 
-# Run and deploy your AI Studio app
+> *"Don't just donate life—keep the heart of your squad beating."*
+> *"Because your pulse is the rhythm someone else is waiting to live by."*
 
-This contains everything you need to run your app locally.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-vercel-black?style=flat&logo=vercel)](https://bug-slayers-project-five.vercel.app/)
+![Track](https://img.shields.io/badge/Track-Social%20Tech-blue?style=flat)
+![Hackathon](https://img.shields.io/badge/SNUC%20Hacks-'26-red?style=flat)
 
-View your app in AI Studio: https://ai.studio/apps/8314eb5d-c3cb-4497-8bba-fec55a4258b3
+A group-anchored life-support system that transforms the 90-day blood donation gap into a daily habit of collective readiness and micro-volunteering.
 
-## Run Locally
+---
 
-**Prerequisites:**  Node.js
+## Stack
 
+| Layer | Tech |
+|---|---|
+| Frontend | React (web), Flutter (mobile) |
+| Backend | Supabase API / FastAPI |
+| Database | PostgreSQL (Supabase) |
+| Real-time | Supabase Realtime |
+| Cloud | Google Cloud Run, Vercel |
+| Auth | Supabase Authentication |
+| Verification | GPS Geofencing + QR Scanning |
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+---
+
+## Architecture
+
+```
+User → Daily Check-in (hydration/iron)
+     → Squad Vitality Score updated (Supabase Realtime)
+     → Action: Clinic Donation / Micro-task
+          → Verified via GPS Geofence + Hospital QR Scan (Proof-of-Impact)
+     → Rewards: Pulse Points, Badges
+     → Missed task → Vitality Meter leaks → Flatline UI → Peer Nudge
+```
+
+---
+
+## Core Features
+
+- **Vitality Meter** — Shared real-time group score; flatlines (UI greyscale) on inactivity
+- **Readiness Logs** — Daily iron/hydration tracking to reduce clinic rejection rates
+- **Micro-Volunteer Hub** — 5-min tasks bridging the 90-day inter-donation gap
+- **Proof-of-Impact (PoI)** — Mandatory GPS geofence + QR scan at clinics; eliminates fake logging
+- **Relay Logic** — Automated scheduling to keep ≥1 squad member in a ready-to-donate window
+- **Peer Nudges** — Social resuscitation alerts triggered on score drop
