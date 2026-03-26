@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trophy, Medal, Award, TrendingUp } from 'lucide-react';
+import { Trophy, Medal, Award, TrendingUp, Users } from 'lucide-react';
 import { motion } from 'motion/react';
 import { User } from '../types';
 import { cn } from '../lib/utils';
@@ -23,7 +23,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ members }) => {
       </div>
 
       <div className="flex-1 space-y-3 overflow-y-auto pr-2 custom-scrollbar">
-        {sortedMembers.map((member, index) => (
+        {sortedMembers.length > 0 ? sortedMembers.map((member, index) => (
           <motion.div
             key={member.id}
             initial={{ opacity: 0, x: 20 }}
@@ -63,7 +63,12 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ members }) => {
               <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Regularity</p>
             </div>
           </motion.div>
-        ))}
+        )) : (
+          <div className="flex-1 flex flex-col items-center justify-center text-gray-600 italic text-sm py-10">
+            <Users size={32} className="opacity-20 mb-2" />
+            No members in this circle yet.
+          </div>
+        )}
       </div>
     </div>
   );

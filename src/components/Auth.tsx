@@ -8,6 +8,7 @@ export function Auth() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [bloodGroup, setBloodGroup] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
@@ -19,13 +20,14 @@ export function Auth() {
     setMessage(null);
 
     try {
-      if (isSignUp) {
+          if (isSignUp) {
         const { data, error: signUpError } = await supabase.auth.signUp({
           email,
           password,
           options: {
             data: {
               username: username,
+              blood_group: bloodGroup,
             },
           },
         });
@@ -78,6 +80,28 @@ export function Auth() {
                   onChange={(e) => setUsername(e.target.value)}
                   required={isSignUp}
                 />
+              </div>
+            </div>
+          )}
+
+          {isSignUp && (
+            <div className="space-y-1">
+              <label className="text-xs font-bold uppercase tracking-widest text-gray-500 ml-1">Blood Group</label>
+              <div className="relative">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">
+                  <div className="w-[18px] h-[18px] flex items-center justify-center font-bold text-[10px]">B+</div>
+                </div>
+                <select
+                  className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-red-500/50 transition-colors appearance-none"
+                  value={bloodGroup}
+                  onChange={(e) => setBloodGroup(e.target.value)}
+                  required={isSignUp}
+                >
+                  <option value="" disabled className="bg-[#151515]">Select Blood Group</option>
+                  {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map(group => (
+                    <option key={group} value={group} className="bg-[#151515]">{group}</option>
+                  ))}
+                </select>
               </div>
             </div>
           )}

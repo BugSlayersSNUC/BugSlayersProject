@@ -67,34 +67,62 @@ export const HealthInfo: React.FC = () => {
       </div>
 
       <section className="glass-card p-8 rounded-3xl">
-        <div className="flex items-center gap-3 text-blue-500 mb-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex items-center gap-3 text-blue-500 mb-8"
+        >
           <Zap size={24} />
           <h3 className="text-xl font-bold">Preparation & Recovery</h3>
-        </div>
+        </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="space-y-2">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="space-y-2"
+          >
             <h4 className="font-bold text-sm uppercase tracking-widest text-gray-500">Before</h4>
             <p className="text-xs text-gray-400 leading-relaxed">Drink plenty of water, eat a healthy meal (avoid fatty foods), and get a good night's sleep.</p>
-          </div>
-          <div className="space-y-2">
+          </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="space-y-2"
+          >
             <h4 className="font-bold text-sm uppercase tracking-widest text-gray-500">During</h4>
             <p className="text-xs text-gray-400 leading-relaxed">The actual donation takes about 8-10 minutes. Relax, listen to music, or chat with the staff.</p>
-          </div>
-          <div className="space-y-2">
+          </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="space-y-2"
+          >
             <h4 className="font-bold text-sm uppercase tracking-widest text-gray-500">After</h4>
             <p className="text-xs text-gray-400 leading-relaxed">Have a snack and drink. Avoid heavy lifting or intense exercise for the next 24 hours.</p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      <div className="flex flex-col items-center gap-4 pt-10">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        className="flex flex-col items-center gap-4 pt-10"
+      >
         <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center text-red-500">
           <Droplets size={32} />
         </div>
         <p className="text-center text-gray-500 text-sm italic max-w-md">
           "The blood you donate gives someone another chance at life. One day that someone may be a close relative, a friend, a loved one—or even you."
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 };

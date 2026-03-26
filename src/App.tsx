@@ -22,6 +22,9 @@ import {
   Heart,
   MessageSquare,
   Globe,
+  MapPin,
+  ShieldCheck,
+  AlertTriangle,
   User as UserIcon
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -33,6 +36,9 @@ import { Explore } from './components/Explore';
 import { HealthInfo } from './components/HealthInfo';
 import { Community } from './components/Community';
 import { Rewards } from './components/Rewards';
+import { DonationCenters } from './components/DonationCenters';
+import { EligibilityCheck } from './components/EligibilityCheck';
+import { EmergencyHelp } from './components/EmergencyHelp';
 import { Chatbot } from './components/Chatbot';
 import { LanguageSelector } from './components/LanguageSelector';
 import { Circle, Donation, User } from './types';
@@ -149,12 +155,13 @@ const CHART_DATA = [
   { name: 'Sun', activity: 85 },
 ];
 
-type View = 'dashboard' | 'explore' | 'info' | 'community' | 'rewards';
+type View = 'dashboard' | 'explore' | 'info' | 'community' | 'rewards' | 'centers' | 'eligibility' | 'emergency';
 
 export default function App() {
   const { t, i18n } = useTranslation();
   const [session, setSession] = useState<Session | null>(null);
   const [userPoints, setUserPoints] = useState<number>(0);
+  const [userBloodGroup, setUserBloodGroup] = useState<string | null>(null);
   const [circlePoints, setCirclePoints] = useState<number>(0);
   const [currentView, setCurrentView] = useState<View>('dashboard');
   const [activeCircle, setActiveCircle] = useState<Circle>(MOCK_CIRCLES[0]);
@@ -163,49 +170,87 @@ export default function App() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
-      if (session) fetchUserPoints(session.user.id);
+      if (session) fetchUserPoints(session.user);
     });
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
-      if (session) fetchUserPoints(session.user.id);
+      if (session) fetchUserPoints(session.user);
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
-  const fetchUserPoints = async (userId: string) => {
+  const fetchUserPoints = async (user: any) => {
+    const userId = user.id;
+    const metadataBloodGroup = user.user_metadata?.blood_group;
+
     try {
-      const { data, error } = await supabase
+      let { data, error } = await supabase
         .from('users')
-        .select('points, current_circle')
+        .select('points, current_circle, blood_group')
         .eq('id', userId)
         .single();
       
+      // If the column is missing, Supabase returns a 400 error
+      if (error && (error.message?.includes('blood_group') || error.code === 'PGRST204')) {
+        console.warn('The "blood_group" column seems to be missing from your "users" table. Retrying without it...');
+        const retry = await supabase
+          .from('users')
+          .select('points, current_circle')
+          .eq('id', userId)
+          .single();
+        data = retry.data;
+        error = retry.error;
+      }
+
       if (error) {
-        if (error.code === 'PGRST116') { // Record not found
+        console.error('Supabase fetch error:', error.message, error.details, error.hint);
+        if (error.code === 'PGRST116') {
           // Create the user record if it doesn't exist
           const { error: insertError } = await supabase
             .from('users')
-            .insert({ id: userId, points: 0, current_circle: 'Red Lifeline' });
+            .insert({ 
+              id: userId, 
+              points: 0, 
+              current_circle: 'Red Lifeline',
+              blood_group: metadataBloodGroup
+            });
           
           if (insertError) {
-            console.error('Error creating user record:', insertError);
+            console.error('Error creating user record:', insertError.message, insertError.details, insertError.hint);
           } else {
             setUserPoints(0);
-            // Add to Red Lifeline circle_members
+            setUserBloodGroup(metadataBloodGroup || null);
             await joinCircleInDB(userId, 'Red Lifeline');
           }
-        } else {
-          console.error('Error fetching points:', error);
+          return;
         }
         return;
       }
       
       if (data) {
         setUserPoints(data.points || 0);
+        
+        // If blood group is missing in DB but present in metadata, update it
+        if (!data.blood_group && metadataBloodGroup) {
+          const { error: updateError } = await supabase
+            .from('users')
+            .update({ blood_group: metadataBloodGroup })
+            .eq('id', userId);
+          
+          if (!updateError) {
+            setUserBloodGroup(metadataBloodGroup);
+          } else {
+            console.error('Error updating blood group:', updateError);
+            setUserBloodGroup(data.blood_group || null);
+          }
+        } else {
+          setUserBloodGroup(data.blood_group || null);
+        }
+
         if (data.current_circle) {
           const circle = MOCK_CIRCLES.find(c => c.name === data.current_circle);
           if (circle) setActiveCircle(circle);
@@ -502,6 +547,24 @@ export default function App() {
             icon={<Award size={18} />}
             label={t('nav.rewards')}
           />
+          <NavButton 
+            active={currentView === 'centers'} 
+            onClick={() => setCurrentView('centers')}
+            icon={<MapPin size={18} />}
+            label="Find Centers"
+          />
+          <NavButton 
+            active={currentView === 'eligibility'} 
+            onClick={() => setCurrentView('eligibility')}
+            icon={<ShieldCheck size={18} />}
+            label="Eligibility"
+          />
+          <NavButton 
+            active={currentView === 'emergency'} 
+            onClick={() => setCurrentView('emergency')}
+            icon={<AlertTriangle size={18} className="text-red-500" />}
+            label="Emergency Help"
+          />
         </nav>
 
         <nav className="flex flex-col gap-2">
@@ -536,7 +599,14 @@ export default function App() {
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-orange-500" />
               <div>
-                <p className="text-sm font-bold">{session.user.user_metadata.username || session.user.email}</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-sm font-bold">{session.user.user_metadata.username || session.user.email}</p>
+                  {userBloodGroup && (
+                    <span className="bg-red-500/10 text-red-500 text-[8px] font-black px-1.5 py-0.5 rounded border border-red-500/20">
+                      {userBloodGroup}
+                    </span>
+                  )}
+                </div>
                 <div className="flex items-center gap-1 text-[10px] text-red-500 font-bold">
                   <Heart size={10} fill="currentColor" />
                   <span>{userLivesImpacted} Lives Impacted</span>
@@ -766,6 +836,33 @@ export default function App() {
                   }
                 }} 
               />
+            </motion.div>
+          ) : currentView === 'centers' ? (
+            <motion.div
+              key="centers"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+            >
+              <DonationCenters />
+            </motion.div>
+          ) : currentView === 'eligibility' ? (
+            <motion.div
+              key="eligibility"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+            >
+              <EligibilityCheck />
+            </motion.div>
+          ) : currentView === 'emergency' ? (
+            <motion.div
+              key="emergency"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+            >
+              <EmergencyHelp />
             </motion.div>
           ) : (
             <motion.div

@@ -6,6 +6,7 @@ export interface User {
   regularityScore: number; // 0-100
   lastDonationDate?: string;
   location?: string;
+  bloodGroup?: string;
 }
 
 export interface Donation {
@@ -75,4 +76,17 @@ export interface Nomination {
   votes: string[]; // User IDs
   status: 'pending' | 'redeemed' | 'failed';
   timestamp: string;
+}
+
+export interface EmergencyRequest {
+  id: string;
+  userId: string;
+  userName: string;
+  bloodType: string;
+  location: string;
+  urgency: 'critical' | 'high' | 'moderate';
+  status: 'active' | 'resolved';
+  contactInfo: string;
+  timestamp: string;
+  volunteersCount: number;
 }
